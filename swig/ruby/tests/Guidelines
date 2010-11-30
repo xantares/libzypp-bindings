@@ -1,0 +1,36 @@
+Hide implementation
+- the concept of 'target'
+- the concept of 'pool'
+- the concept of 'tracked pointer'
+
+Establish Zypp.root = "/"
+
+Only Resolvable and Transaction + Step
+
+Resolvable as base class for Package, Patch, Pattern, Product
+
+Zypp as main class
+- singleton (hide getZypp, use Zypp.instance)
+- Zypp.root to establish target directory
+- Zypp.reposdir for /etc/repos.d
+- Zypp.repos Enumerable of Repository
+- Respository.new, .refresh
+- Zypp.repos << Repository
+- monkeypatch zypp.repos.refresh as zypp.repos.each {|r| r.refresh }
+
+- Repository.enable! , enabled = true
+- Repository.delete -> removes repos.d/.repo file
+
+- Zypp.transaction.to_{install,update,remove|delete} << Resolvable
+- transaction.lock
+- transaction.solved? -> false
+- transaction.each -> shows by_user only
+- transaction.commit (implicitly solved, raising in case)
+- transaction.solve! -> raises
+- transaction.solved? -> true
+- transaction.each -> shows all (by_user, by_system)
+- transaction.commit
+  ==> commit is actually monkeypatched, checking for solved? etc.
+- transaction.download
+- transaction.each { |s| s.download }
+- transaction.each { |s| s.commit }
