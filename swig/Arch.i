@@ -27,8 +27,8 @@
 
 %nodefault zypp::Arch;
 namespace zypp {
-class Arch {
-};
+  class Arch {
+  };
 };
 
 %extend zypp::Arch
@@ -85,10 +85,10 @@ class Arch {
    */
   static Arch s390x() { return zypp::Arch_s390x; }
 
-#if 0 /* defined(SWIGRUBY) */
+#if defined(SWIGRUBY)
 %typemap(out) int is_builtin
    "$result = $1 ? Qtrue : Qfalse;";
-%rename("builtin?") builtin;
+%rename("builtin?") is_builtin();
 #endif
   /*
    * Whether this is a builtin (or known) architecture.
@@ -100,7 +100,7 @@ class Arch {
 #if defined(SWIGRUBY)
 %typemap(out) int compatible_with
    "$result = $1 ? Qtrue : Qfalse;";
-%rename("compatible_with?") compatible_with;
+%rename("compatible_with?") compatible_with(const zypp::Arch & arch);
 #endif
   /*
    * Check if this architecture is compatible with another one
@@ -152,7 +152,7 @@ class Arch {
 #if defined(SWIGRUBY)
 %typemap(out) int equal
    "$result = $1 ? Qtrue : Qfalse;";
-%rename("==") equal;
+%rename("==") equal(const zypp::Arch & arch);
   /*
    * Equality operator
    *
