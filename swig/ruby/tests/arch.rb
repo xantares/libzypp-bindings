@@ -19,14 +19,14 @@ class ArchTest < Test::Unit::TestCase
     a = Arch.new("i386")
     assert a
     assert_equal "i386", a.to_s
-    assert_equal true, a.is_builtin
+    assert_equal true, a.builtin?
     
     # i486 is 'bigger' than i386
     
     b = Arch.new("i486")
     assert b
     assert_equal "i486", b.to_s
-    assert b.is_builtin
+    assert b.builtin?
     if VERSION > 800
       assert_equal a, b.base_arch
     end
@@ -37,7 +37,7 @@ class ArchTest < Test::Unit::TestCase
     z = Arch.new("xyzzy")
     assert z
     assert_equal "xyzzy", z.to_s
-    assert_equal false, z.is_builtin
+    assert_equal false, z.builtin?
     
     # predefined archs
     assert_equal Arch.new("noarch"), Arch.noarch 
