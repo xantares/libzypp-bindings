@@ -2,8 +2,7 @@
 # Example for target
 #
 
-$:.unshift "../../../build/swig/ruby"
-
+$:.unshift File.expand_path(File.join(File.dirname(__FILE__),"..","..","..","build","swig","ruby"))
 
 # test loading of extension
 require 'test/unit'
