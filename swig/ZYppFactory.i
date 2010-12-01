@@ -1,9 +1,27 @@
+/*
+ * ZYppFactory.i
+ * :nodoc:
+ *
+ * This exposes the internal ZYppFactory class
+ *
+ */
 
-%include <zypp/ZYppFactory.h>
+%nodefault bindings::ZyppFactory;
+namespace bindings {
+  class ZyppFactory {
+  };
+};
 
-namespace zypp
+%extend bindings::ZyppFactory
 {
-typedef intrusive_ptr<ZYpp> ZYpp_Ptr;
-%template(ZYpp_Ptr) intrusive_ptr<ZYpp>;
+  static ZyppFactory *instance()
+  {
+    return new bindings::ZyppFactory();
+  }
+  bindings::Zypp *getZypp()
+  { return new bindings::Zypp($self->_instance.getZYpp()); }
+  bindings::Target *target()
+  { return new bindings::Target($self->_instance.getZYpp()->getTarget()); }
+  bool haveZypp()
+  { return $self->_instance.haveZYpp(); }
 }
-

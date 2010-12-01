@@ -1,19 +1,33 @@
-%ignore zypp::Target::reset;
-namespace zypp
-{
-  // Redefine nested class in global scope for SWIG
-  struct DistributionLabel {};
-}
-%include <zypp/Target.h>
-namespace zypp
-{
-typedef intrusive_ptr<Target> Target_Ptr;
-%template(Target_Ptr) intrusive_ptr<Target>;
-}
-%{
-  namespace zypp
-  {
-    // Tell c++ compiler about SWIGs global class
-    typedef Target::DistributionLabel DistributionLabel;
+/*
+ * Target.i
+ * :nodoc:
+ *
+ * This exposes the internal Target class
+ *
+ */
+
+/* :nodoc:
+ * bindings::Target
+ *
+ */
+
+%nodefault bindings::Target;
+namespace bindings {
+  class Target {
+  };
+};
+
+/*
+ * :nodoc:
+ *
+ * Internal declaration, access via monkeypatching
+ *
+ */
+%extend bindings::Target {
+  ~Target() { $self->_ptr->unload(); }
+  const char *root() {
+    return $self->_ptr->root().asString().c_str();
   }
-%}
+  void load()
+  { $self->_ptr->load(); }
+}

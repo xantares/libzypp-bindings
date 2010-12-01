@@ -2,21 +2,29 @@
 # Test starting of zypp
 #
 
-$:.unshift "../../../build/swig/ruby"
+$:.unshift File.expand_path(File.join(File.dirname(__FILE__),"..","..","..","build","swig","ruby"))
+$:.unshift File.expand_path(File.join(File.dirname(__FILE__),".."))
 
-
-# test loading of extension
 require 'test/unit'
+require 'zypp'
 
 class LoadTest < Test::Unit::TestCase
-  def test_loading
-    require 'zypp'
-    zypp = Zypp::ZYppFactory::instance.getZYpp
+  def test_starting
+    zypp = Zypp::Zypp.instance
     assert zypp
-    zconfig = Zypp::ZConfig::instance
-    assert zconfig
-    puts zconfig.systemArchitecture
-    zconfig.setSystemArchitecture(Zypp::Arch.new("i686"))
-    puts zconfig.systemArchitecture
+    puts "zypp ok"
+    r = zypp.root
+    assert_equal nil, r # not initialized
+    zypp.root = "/"
+    puts "root set"
+    assert_equal "/", zypp.root # initialized
+    puts "root ok"
+    zypp.load
+    puts "root loaded"
+    puts "#{zypp.size} resolvables loaded"
+    zypp.each do |r|
+      puts "Resolvable #{r}"
+      break
+    end
   end
 end

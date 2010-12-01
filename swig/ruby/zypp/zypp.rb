@@ -7,10 +7,8 @@
 module Zypp
   class Zypp
     def self.instance
-      ZYppFactory.instance.getZYpp
+      ZyppFactory.instance.getZypp
     end
-  end
-  class Ptr
     #
     # root directory of target system
     # return +nil+ if not yet defined
@@ -22,7 +20,12 @@ module Zypp
     end
     
     def root= path
-      self.instance.initialize_target path
+      self.initialize_target path
+    end
+    
+    def load
+      t = self.target
+      t.load if t
     end
   end
 end

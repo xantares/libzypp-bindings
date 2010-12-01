@@ -1,10 +1,5 @@
 %module zypp
 
-/* set this to 0 (zero) to only create a subset of the bindings
- * for testing
- */
-#define PRODUCTION 1
-
 #ifdef SWIGPERL5
 %{
    #undef NORMAL
@@ -15,7 +10,13 @@
 %}
 #endif
 
+/* set this to 0 (zero) to only create a subset of the bindings
+ * for testing
+ */
+#define PRODUCTION 0
+
 %{
+
 /* Includes the header in the wrapper code */
 #ifdef SWIGRUBY
 #define REG_EXTENDED 1
@@ -24,7 +25,8 @@
 #define REG_NOSUB (REG_NEWLINE << 1)
 #endif
 
-/*
+/*===================================================================
+ *
  * type definitions to keep the C code generic
  */
  
@@ -107,6 +109,11 @@ SWIGINTERNINLINE SV *SWIG_From_double  SWIG_PERL_DECL_ARGS_1(double value);
 #include <EXTERN.h>
 #endif
 
+/*===================================================================
+ *
+ * libzypp includes
+ *
+ */
 
 #include <sstream>
 #include "zypp/base/PtrTypes.h"
@@ -141,7 +148,15 @@ using namespace zypp::filesystem;
 
 typedef std::list<std::string> StringList;
 
+#include "bindings.h"
+
 %}
+
+/*===================================================================
+ *
+ * Bindings definitions
+ *
+ */
 
 /* prevent swig from creating a type called 'Target_Type' */
 #if defined(SWIGRUBY)
@@ -173,12 +188,30 @@ typedef std::list<std::string> StringList;
 
 #define VERSION ZYPP_VERSION
 
-/* These include files are already cleaned up from C++ cruft */
+/*
+ *============================================================================
+ *
+ */
+ 
+/*
+ * These include files are already cleaned up from C++ cruft
+ */
+
 %include "Arch.i"
 %include "Resolvable.i"
 %include "Callbacks.i"
+%include "ZYppFactory.i"
+%include "ZConfig.i"
+%include "ZYpp.i"
+%include "Target.i"
 
-/* These include files are pending to be cleaned up from C++ cruft */
+/*
+ *============================================================================
+ *
+ */
+ 
+
+
 #if PRODUCTION /* set 0 for testing, these files still carry the full C++ cruft */
 
 %nodefault ByKind;
@@ -212,6 +245,11 @@ namespace zypp {
 #endif
 %import <zypp/base/PtrTypes.h>
 %import <zypp/base/Flags.h>
+
+/*===================================================================
+ * These include files are pending to be cleaned up from C++ cruft
+ *
+ */
 
 %include "IdStringType.i"
 %include "Pathname.i"
@@ -250,7 +288,6 @@ namespace zypp {
 %include "ZYppCommitResult.i"
 %include "TmpPath.i"
 %include "Resolver.i"
-%include "ZConfig.i"
 
 %ignore zypp::ZYpp::setTextLocale;
 %ignore zypp::ZYpp::getTextLocale;
@@ -263,8 +300,6 @@ namespace zypp {
 
 %include <zypp/ZYpp.h>
 
-%include "ZYppFactory.i"
-#endif
 
 //
 // helper
@@ -281,3 +316,5 @@ namespace zypp {
     }
   }
 %}
+
+#endif
