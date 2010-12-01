@@ -17,10 +17,13 @@ namespace bindings {
 	};
 	
 	/*
-	 * ZConfig
+	 * Config
 	 * 
 	 */
-	class ZConfig {
+	class Config {
+	public:
+		zypp::ZConfig & _instance;
+		Config() : _instance(zypp::ZConfig::instance()) { }
 	};
 	
 	/*

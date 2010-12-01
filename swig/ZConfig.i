@@ -1,37 +1,41 @@
 /*
  * ZConfig.i
- * Document-class: ZConfig
+ * Document-class: Config
  *
  * zypp-wide configuration settings
  *
  */
 
-%nodefault bindings::ZConfig;
+%nodefault bindings::Config;
 namespace bindings {
-  class ZConfig {
+  class Config {
   };
 };
 
-%extend bindings::ZConfig
+%extend bindings::Config
 {
-  static const char *root()
-  { return zypp::ZConfig::instance().systemRoot().asString().c_str(); }
+  static Config *instance()
+  {
+    return new bindings::Config();
+  }
+  const char *root()
+  { return $self->_instance.systemRoot().asString().c_str(); }
   
-  static Arch *default_arch()
-  { static zypp::Arch arch = ZConfig::defaultSystemArchitecture();
+  zypp::Arch *default_arch()
+  { static zypp::Arch arch = zypp::ZConfig::defaultSystemArchitecture();
     return &arch;
   }
   
-  Arch arch()
-  { return zypp::ZConfig::instance().systemArchitecture(); }
+  zypp::Arch arch()
+  { return $self->_instance.systemArchitecture(); }
   
 #if defined(SWIGRUBY)
-%rename ("arch=") set_arch(const Arch & arch_r);
+%rename ("arch=") set_arch(const zypp::Arch & arch_r);
 #endif
-  void set_arch(const Arch & arch_r)
-  { zypp::ZConfig::instance().setSystemArchitecture( arch_r ); }
+  void set_arch(const zypp::Arch & arch_r)
+  { $self->_instance.setSystemArchitecture( arch_r ); }
   void reset_arch()
-  { zypp::ZConfig::instance().resetSystemArchitecture(); }
+  { $self->_instance.resetSystemArchitecture(); }
 
 }
 

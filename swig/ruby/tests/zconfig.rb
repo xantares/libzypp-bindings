@@ -1,5 +1,5 @@
 #
-# Test ZConfig
+# Test Zypp::Config
 #
 
 $:.unshift File.expand_path(File.join(File.dirname(__FILE__),"..","..","..","build","swig","ruby"))
@@ -10,8 +10,8 @@ require 'zypp'
 
 class LoadTest < Test::Unit::TestCase
   def test_zconfig
-    # get ZConfig instance
-    zconfig = Zypp::ZConfig.instance
+    # get Config instance
+    zconfig = Zypp::Config.instance
     assert zconfig
     
     # get system arch
