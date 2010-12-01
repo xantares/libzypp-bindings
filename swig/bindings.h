@@ -49,8 +49,8 @@ namespace bindings {
 	 */
 	class Resolvable {
 	public:
-		zypp::Resolvable::constPtr _ptr;
-		Resolvable(zypp::Resolvable::constPtr ptr) { _ptr = ptr; }
+		zypp::ResObject::constPtr _ptr;
+		Resolvable(zypp::ResObject::constPtr ptr) { _ptr = ptr; }
 	};
 };
 

@@ -46,4 +46,6 @@ namespace bindings {
   bool is_system()
   { return $self->_ptr->isSystem(); }
 
+  zypp::ResObject::constPtr ptr()
+  { return $self->_ptr; }
 }
