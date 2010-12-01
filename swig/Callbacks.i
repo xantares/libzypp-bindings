@@ -141,7 +141,7 @@ struct RemoveResolvableReportReceiver : public zypp::callback::ReceiveReport<zyp
 
   virtual void start( const zypp::Resolvable *resolvable )
   {
-    Target_Type r = SWIG_NewPointerObj((void *)&(*resolvable), SWIGTYPE_p_zypp__Resolvable, 0);
+    Target_Type r = SWIG_NewPointerObj((void *)&(*resolvable), SWIGTYPE_p_bindings__Resolvable, 0);
     Target_Type result = target_call(instance, "removal_start", 1, r );
 #if defined(SWIGPYTHON)
     if (result) Py_DecRef(result);

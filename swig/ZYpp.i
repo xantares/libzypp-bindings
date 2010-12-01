@@ -67,4 +67,15 @@ namespace bindings {
   { $self->_ptr->initializeTarget(root, true); }
   int size()
   { return $self->_ptr->pool().size(); }
+#if defined(SWIGRUBY)
+  void each()
+  {
+    zypp::ResPool::const_iterator it = $self->_ptr->pool().begin();
+    while (it != $self->_ptr->pool().end()) {
+      VALUE resolvable = SWIG_NewPointerObj(new bindings::Resolvable(it->resolvable()), SWIGTYPE_p_bindings__Resolvable, 1);
+      rb_yield(resolvable);
+    }
+    return;
+  }
+#endif
 }

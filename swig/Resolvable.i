@@ -12,18 +12,15 @@
  *
  * === Usage
  *
-%ignore zypp::make;
-%import <zypp/sat/Solvable.h>
-%include <zypp/Resolvable.h>
  */
 
-%nodefault zypp::Resolvable;
-namespace zypp {
-class Resolvable {
-};
+%nodefault bindings::Resolvable;
+namespace bindings {
+  class Resolvable {
+  };
 };
 
-%extend zypp::Resolvable
+%extend bindings::Resolvable
 {
   /* no con/de structor */
   
@@ -31,13 +28,13 @@ class Resolvable {
    * name of package/patch/pattern
    */
   const char *name()
-  { return $self->name().c_str(); }
+  { return $self->_ptr->name().c_str(); }
   
   /*
    * architecture of package/patch/pattern
    */
   zypp::Arch arch()
-  { return $self->arch();  }
+  { return $self->_ptr->arch();  }
   
   /*
    * coming from system (is installed)
@@ -47,6 +44,6 @@ class Resolvable {
 %alias is_system "installed?";
 #endif
   bool is_system()
-  { return $self->isSystem(); }
+  { return $self->_ptr->isSystem(); }
 
 }

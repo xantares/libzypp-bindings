@@ -23,7 +23,7 @@ class LoadTest < Test::Unit::TestCase
     puts "root loaded"
     puts "#{zypp.size} resolvables loaded"
     zypp.each do |r|
-      puts "Resolvable #{r}"
+      puts "Resolvable #{r.name}"
       break
     end
   end
