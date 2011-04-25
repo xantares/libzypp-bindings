@@ -150,6 +150,9 @@ typedef std::list<std::string> StringList;
 
 #include "bindings.h"
 
+#include "satsolver-bindings.h"
+#include "generic_helpers.h"
+
 %}
 
 /*===================================================================
@@ -157,6 +160,8 @@ typedef std::list<std::string> StringList;
  * Bindings definitions
  *
  */
+
+#include exception.i
 
 /* prevent swig from creating a type called 'Target_Type' */
 #if defined(SWIGRUBY)
@@ -204,6 +209,38 @@ typedef std::list<std::string> StringList;
 %include "ZConfig.i"
 %include "ZYpp.i"
 %include "Target.i"
+
+#if defined(SWIGRUBY)
+%include <ruby.swg>
+#endif
+
+/* satsolver bindings */
+#define __type
+
+%include "generic_helpers.i"
+
+/*
+ * just define empty structs to expose the types to SWIG
+ */
+
+%include "pool.i"
+%include "repo.i"
+%include "repodata.i"
+%include "repokey.i"
+%include "relation.i"
+%include "dependency.i"
+%include "solvable.i"
+%include "job.i"
+%include "request.i"
+%include "decision.i"
+%include "problem.i"
+%include "solution.i"
+%include "covenant.i"
+%include "ruleinfo.i"
+%include "solver.i"
+%include "dataiterator.i"
+%include "step.i"
+%include "transaction.i"
 
 /*
  *============================================================================

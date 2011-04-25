@@ -6,7 +6,11 @@
 ENABLE_TESTING()
 
 SET( SWIG_INPUT "${CMAKE_CURRENT_SOURCE_DIR}/zypp.i" )
-
+SET( SATSOLVER_BINDINGS "/abuild/projects/pac/sat-solver-bindings")
+INCLUDE_DIRECTORIES("${SATSOLVER_BINDINGS}/bindings")
+INCLUDE_DIRECTORIES("${SATSOLVER_BINDINGS}/applayer")
+INCLUDE_DIRECTORIES("${SATSOLVER_BINDINGS}/satsolver")
+INCLUDE_DIRECTORIES("/usr/include/satsolver")
 #
 # Let's see which target languages are available
 #
