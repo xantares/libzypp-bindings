@@ -13,10 +13,6 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11 -fPIC -fno-strict-alias
 # where to look first for cmake modules, before ${CMAKE_ROOT}/Modules/ is checked
 #
 
-SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
-SET(CMAKE_MODULE_PATH ${CMAKE_INSTALL_PREFIX}/share/cmake/Modules ${CMAKE_MODULE_PATH})
-
-INCLUDE(ZyppCommon)
 
 #
 # versioning, packaging
@@ -28,12 +24,6 @@ SET( PACKAGE "libzypp-bindings" )
 SET( VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}" )
 
 
-GENERATE_PACKAGING(${PACKAGE} ${VERSION})
-INCLUDE(CPack)
-
-
-MESSAGE(STATUS "Looking modules in ${CMAKE_MODULE_PATH}")
-
 #
 # Finding Swig
 #
@@ -44,7 +34,10 @@ FIND_PACKAGE(SWIG REQUIRED)
 # Finding Zypp
 #
 
-FIND_PACKAGE(Zypp REQUIRED)
+FIND_PACKAGE(Zypp NO_MODULE REQUIRED)
+
+GENERATE_PACKAGING(${PACKAGE} ${VERSION})
+# INCLUDE(CPack)
 
 # determine zypp version
 FIND_PROGRAM(READ_LINK readlink)
